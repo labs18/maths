@@ -149,8 +149,7 @@ function replaceClass(className, filename) {
     });
 }
 
-replaceClass(".mynavbar", "/html/navbar.html");
-replaceClass(".myjumbotron", "/html/jumbotron.html");
-replaceClass(".myform", "/html/form.html");
+replaceClass(".mynavbar", "/navbar.html");
+replaceClass(".myjumbotron", "/jumbotron.html");
 
 init(0);
