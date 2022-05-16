@@ -97,11 +97,13 @@ function validate() {
     let expectedAnswer = parseInt(
       table.rows[i].cells[5].children[0].ExpectedAnswer
     );
+
     if (actualAnswer == expectedAnswer) {
-      table.rows[i].style = "background-color:#90EE90";
+      table.rows[i].cells[5].children[0].classList.add("is-valid");
     } else {
-      table.rows[i].style = "background-color:#FF7F7F";
+      table.rows[i].cells[5].children[0].classList.add("is-invalid");
     }
+    table.rows[i].cells[5].children[0].disabled = true;
   }
   document.getElementById("submit").disabled = true;
 }
@@ -120,7 +122,11 @@ function setActiveNavBar() {
 
 function init(sign = 0) {
   SIGN = sign;
-  document.getElementById("heading").innerHTML = getHeading();
+  jumbotronHeading = document.getElementById("jumbotronHeading");
+  if (jumbotronHeading != null) {
+    jumbotronHeading.innerHTML = getHeading();
+  }
+
   table = document.querySelector("table");
   generateTable(table);
   document.getElementById("submit").disabled = false;
@@ -131,11 +137,20 @@ function reset() {
   init(SIGN);
 }
 
-const nav = document.querySelector(".mynavbar");
-fetch("/navbar.html")
-  .then((res) => res.text())
-  .then((data) => {
-    nav.innerHTML = data;
-  });
+function replaceClass(className, filename) {
+  console.log(className);
+  console.log(filename);
+  const nav = document.querySelector(className);
+  fetch(filename)
+    .then((res) => res.text())
+    .then((data) => {
+      console.log(data);
+      nav.innerHTML = data;
+    });
+}
 
-init();
+replaceClass(".mynavbar", "/html/navbar.html");
+replaceClass(".myjumbotron", "/html/jumbotron.html");
+replaceClass(".myform", "/html/form.html");
+
+init(0);
